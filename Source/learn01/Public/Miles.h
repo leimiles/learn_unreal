@@ -24,14 +24,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	int32 MyValue = 3;
-
+	float MoveLimitX; // 0.0 by default
 	UPROPERTY(EditAnywhere)
-	bool IsMale = true;
-
+	float MoveSpeed = 1.0f; // 0.0 by default
 	UPROPERTY(EditAnywhere)
-	FVector MyPos = FVector(1.0, 3.0, 4.0);
-
-	UPROPERTY(EditAnywhere)
-	float MyX; // 0.0 by default
+	FVector InitPosition; // 0.0 by default
 };
