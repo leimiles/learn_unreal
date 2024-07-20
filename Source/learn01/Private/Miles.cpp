@@ -14,18 +14,29 @@ AMiles::AMiles()
 void AMiles::BeginPlay()
 {
 	Super::BeginPlay();
-	InitPosition = GetActorLocation();
+	CurrentPosition = GetActorLocation();
+	FrameCount = 0;
+	NewPosition = CurrentPosition;
 }
 
 // Called every frame
 void AMiles::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FFloat16 offset = sinf(GetGameTimeSinceCreation());
-	// InitPosition.X += 0;
-	//  how to print to screen, how to convert float to fstring
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::SanitizeFloat(offset));
-	// how to print
+	FColor DebugTextColor = FColor::MakeRandomColor();
+	FFloat16 DebugDisplayTime = 100.0f;
+	FrameCount++;
 
-	SetActorLocation(InitPosition);
+	FFloat16 Offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
+
+	NewPosition.Y = CurrentPosition.Y + Offset;
+
+	if (UseDebug)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "Current Frame = " + FString::FromInt(FrameCount));
+		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "Offset = " + FString::SanitizeFloat(Offset));
+		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "New Position = " + NewPosition.ToString());
+	}
+
+	SetActorLocation(NewPosition);
 }

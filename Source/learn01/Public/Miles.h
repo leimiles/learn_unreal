@@ -19,14 +19,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	FVector CurrentPosition;
+	int32 FrameCount = 0;
+	FVector NewPosition;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	float MoveLimitX; // 0.0 by default
+	bool UseDebug = false;
+
 	UPROPERTY(EditAnywhere)
-	float MoveSpeed = 1.0f; // 0.0 by default
+	float MoveLimitY = 0.0f;
+
 	UPROPERTY(EditAnywhere)
-	FVector InitPosition; // 0.0 by default
+	float MoveSpeed = 1.0f;
 };
