@@ -38,8 +38,11 @@ private:
 	float MoveLimitY = 0.0f;
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed = 1.0f;
+	UPROPERTY(EditAnywhere)
+	FRotator RotationSpeed;
 	// void SwingMove(float *offset = nullptr);
 	void SwingMove();
+	void Rotate(float deltaTime);
 	void DebugMoveInfo();
 
 	void PureFunction() const; // const function means this function can't change anything about this class

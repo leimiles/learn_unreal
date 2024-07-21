@@ -32,6 +32,7 @@ void AMiles::Tick(float DeltaTime)
 	SwingMove(&Offset);
 	*/
 	SwingMove();
+	Rotate(DeltaTime);
 	DebugMoveInfo();
 }
 
@@ -67,4 +68,9 @@ void AMiles::PureFunction() const
 {
 	FString Message = "Hey, wazzup?";
 	UE_LOG(LogTemp, Display, TEXT("Your message %s"), *Message);
+}
+
+void AMiles::Rotate(float deltaTime)
+{
+	AddActorLocalRotation(RotationSpeed * deltaTime);
 }
