@@ -17,8 +17,10 @@ void AMiles::BeginPlay()
 	CurrentPosition = GetActorLocation();
 	FrameCount = 0;
 	NewPosition = CurrentPosition;
-	UE_LOG(LogTemp, Display, TEXT("This is a log I want to show in log window.")); // output log to log window
+	FString ActorName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("This is a log I want to show in log window.")); // output log to log window
 	UE_LOG(LogTemp, Warning, TEXT("Current Move Range: %f"), MoveLimitY);		   // output log with parameters
+	UE_LOG(LogTemp, Warning, TEXT("Actor Name: %s"), *ActorName);		// use FString var with pointer
 }
 
 // Called every frame
@@ -28,7 +30,6 @@ void AMiles::Tick(float DeltaTime)
 
 	FrameCount++;
 	DebugTextColor = FColor::MakeRandomColor();
-
 
 	FFloat16 Offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
 
