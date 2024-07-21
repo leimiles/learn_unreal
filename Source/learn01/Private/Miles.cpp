@@ -20,27 +20,45 @@ void AMiles::BeginPlay()
 	FString ActorName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("This is a log I want to show in log window.")); // output log to log window
 	UE_LOG(LogTemp, Warning, TEXT("Current Move Range: %f"), MoveLimitY);		   // output log with parameters
-	UE_LOG(LogTemp, Warning, TEXT("Actor Name: %s"), *ActorName);		// use FString var with pointer
+	UE_LOG(LogTemp, Warning, TEXT("Actor Name: %s"), *ActorName);				   // use FString var with pointer
 }
 
 // Called every frame
 void AMiles::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	/*
+	float Offset;
+	SwingMove(&Offset);
+	*/
+	SwingMove();
+	DebugMoveInfo();
+}
 
-	FrameCount++;
-	DebugTextColor = FColor::MakeRandomColor();
+/*
+void AMiles::SwingMove(float *offset) // default parameter won't need default value
+{
+	*offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
+	NewPosition.Y = CurrentPosition.Y + *offset;
+	SetActorLocation(NewPosition);
+}
+*/
 
-	FFloat16 Offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
-
+void AMiles::SwingMove()
+{
+	Offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
 	NewPosition.Y = CurrentPosition.Y + Offset;
+	SetActorLocation(NewPosition);
+}
 
+void AMiles::DebugMoveInfo()
+{
 	if (UseDebug)
 	{
+		FrameCount++;
+		DebugTextColor = FColor::MakeRandomColor();
 		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "Current Frame = " + FString::FromInt(FrameCount));
 		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "Offset = " + FString::SanitizeFloat(Offset));
 		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "New Position = " + NewPosition.ToString());
 	}
-
-	SetActorLocation(NewPosition);
 }

@@ -25,17 +25,20 @@ private:
 	FVector NewPosition;
 	FFloat16 DebugDisplayTime = 100.0f;
 	FColor DebugTextColor;
+	FFloat16 Offset = 0.0f;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
 	UPROPERTY(EditAnywhere)
 	bool UseDebug = false;
-
 	UPROPERTY(EditAnywhere)
 	float MoveLimitY = 0.0f;
-
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed = 1.0f;
+	// void SwingMove(float *offset = nullptr);
+	void SwingMove();
+	void DebugMoveInfo();
 };
