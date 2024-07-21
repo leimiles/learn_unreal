@@ -41,4 +41,6 @@ private:
 	// void SwingMove(float *offset = nullptr);
 	void SwingMove();
 	void DebugMoveInfo();
+
+	void PureFunction() const; // const function means this function can't change anything about this class
 };

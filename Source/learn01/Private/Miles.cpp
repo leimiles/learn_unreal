@@ -62,3 +62,9 @@ void AMiles::DebugMoveInfo()
 		GEngine->AddOnScreenDebugMessage(-1, DebugDisplayTime, DebugTextColor, "New Position = " + NewPosition.ToString());
 	}
 }
+
+void AMiles::PureFunction() const
+{
+	FString Message = "Hey, wazzup?";
+	UE_LOG(LogTemp, Display, TEXT("Your message %s"), *Message);
+}
