@@ -17,6 +17,8 @@ void AMiles::BeginPlay()
 	CurrentPosition = GetActorLocation();
 	FrameCount = 0;
 	NewPosition = CurrentPosition;
+	UE_LOG(LogTemp, Display, TEXT("This is a log I want to show in log window.")); // output log to log window
+	UE_LOG(LogTemp, Warning, TEXT("Current Move Range: %f"), MoveLimitY);		   // output log with parameters
 }
 
 // Called every frame
