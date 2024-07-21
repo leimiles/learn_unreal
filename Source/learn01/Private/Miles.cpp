@@ -25,9 +25,10 @@ void AMiles::BeginPlay()
 void AMiles::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FColor DebugTextColor = FColor::MakeRandomColor();
-	FFloat16 DebugDisplayTime = 100.0f;
+
 	FrameCount++;
+	DebugTextColor = FColor::MakeRandomColor();
+
 
 	FFloat16 Offset = sinf(GetGameTimeSinceCreation() * MoveSpeed) * MoveLimitY;
 

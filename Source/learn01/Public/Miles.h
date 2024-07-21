@@ -23,6 +23,8 @@ private:
 	FVector CurrentPosition;
 	int32 FrameCount = 0;
 	FVector NewPosition;
+	FFloat16 DebugDisplayTime = 100.0f;
+	FColor DebugTextColor;
 
 public:
 	// Called every frame
