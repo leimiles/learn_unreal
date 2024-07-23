@@ -19,7 +19,21 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+private:
+	FVector LiftOrigin;
+	FVector LiftTarget;
+	float LiftSpeed;
+
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	UPROPERTY(EditAnywhere)
+	bool UseLiftUp = false;
+
+	UPROPERTY(EditAnywhere)
+	float LiftOffset = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	float LiftDuration = 1.0f;
 };
