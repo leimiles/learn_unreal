@@ -25,6 +25,10 @@ void UCPP_ComponentTest::BeginPlay()
 void UCPP_ComponentTest::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	AActor *Owner = GetOwner();
+
+	UE_LOG(LogTemp, Warning, TEXT("My owner address: %u"), Owner);
+	UE_LOG(LogTemp, Warning, TEXT("My owner position: %s"), *(Owner->GetActorLocation().ToString()));	// get value of FString
 
 	// ...
 }
