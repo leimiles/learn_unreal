@@ -19,17 +19,6 @@ void UCPP_ComponentTest::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Hey I'm a component class"));
 	LiftOrigin = GetOwner()->GetActorLocation();
 	LiftTarget = LiftOrigin + FVector3d::UpVector * LiftOffset;
-	// ...
-
-	UE_LOG(LogTemp, Display, TEXT("LiftOrigin: %s"), *LiftOrigin.ToCompactString());
-	UE_LOG(LogTemp, Display, TEXT("LiftTarget: %s"), *LiftTarget.ToCompactString());
-}
-
-// Called every frame
-void UCPP_ComponentTest::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	if (LiftDuration > 0.0f)
 	{
 		LiftSpeed = FVector::Distance(LiftOrigin, LiftTarget) / LiftDuration;
@@ -39,8 +28,24 @@ void UCPP_ComponentTest::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 		LiftSpeed = 1.0f;
 	}
 
-	FVector NewPosition = FMath::VInterpConstantTo(GetOwner()->GetActorLocation(), LiftTarget, DeltaTime, LiftSpeed);
-	GetOwner()->SetActorLocation(NewPosition);
+	// UE_LOG(LogTemp, Display, TEXT("LiftOrigin: %s"), *LiftOrigin.ToCompactString());
+	// UE_LOG(LogTemp, Display, TEXT("LiftTarget: %s"), *LiftTarget.ToCompactString());
+}
+
+// Called every frame
+void UCPP_ComponentTest::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (UseLiftUp)
+	{
+		FVector NewPosition = FMath::VInterpConstantTo(GetOwner()->GetActorLocation(), LiftTarget, DeltaTime, LiftSpeed);
+		GetOwner()->SetActorLocation(NewPosition);
+	}
+	else
+	{
+		FVector NewPosition = FMath::VInterpConstantTo(GetOwner()->GetActorLocation(), LiftOrigin, DeltaTime, LiftSpeed);
+		GetOwner()->SetActorLocation(NewPosition);
+	}
 
 	// UE_LOG(LogTemp, Warning, TEXT("My owner address: %u"), Owner);
 	// UE_LOG(LogTemp, Warning, TEXT("My owner position: %s"), *(Owner->GetActorLocation().ToCompactString()));	// get value of FString
