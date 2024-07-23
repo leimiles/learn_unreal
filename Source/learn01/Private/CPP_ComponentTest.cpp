@@ -28,7 +28,7 @@ void UCPP_ComponentTest::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	AActor *Owner = GetOwner();
 
 	UE_LOG(LogTemp, Warning, TEXT("My owner address: %u"), Owner);
-	UE_LOG(LogTemp, Warning, TEXT("My owner position: %s"), *(Owner->GetActorLocation().ToString()));	// get value of FString
+	UE_LOG(LogTemp, Warning, TEXT("My owner position: %s"), *(Owner->GetActorLocation().ToCompactString()));	// get value of FString
 
 	// ...
 }
