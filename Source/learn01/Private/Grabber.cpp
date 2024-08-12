@@ -37,9 +37,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// MilesTools::DebugOnScreen(FString::SanitizeFloat(MyWorld->TimeSeconds)); // print seconds since game starts
 
 	FVector DebugStart = GetComponentLocation();
-	DebugStart.Z += MaxGrabHeight;
-	FVector DebugEnd = DebugStart + GetForwardVector() * MaxGrabLength;		// remember to adjust component rotation
-	DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Red);
+	FVector DebugEnd = DebugStart + GetForwardVector() * MaxGrabLength; // remember to adjust component rotation
+	DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Green);
 
-	//MilesTools::DebugOnScreen(DebugEnd.ToCompactString());
+	// MilesTools::DebugOnScreen(DebugEnd.ToCompactString());
 }

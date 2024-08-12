@@ -24,6 +24,4 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	UPROPERTY(EditAnywhere)
 	float MaxGrabLength = 200.0f;
-	UPROPERTY(EditAnywhere)
-	float MaxGrabHeight = 140.0f;
 };
