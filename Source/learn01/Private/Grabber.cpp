@@ -3,6 +3,7 @@
 #include "Grabber.h"
 #include "Engine/GameEngine.h"
 #include "MilesTools.h"
+#include "Engine/World.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -28,6 +29,9 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	FString RotatorInfo = GetComponentRotation().ToCompactString();
 	// MilesTools::DebugOnScreen("Rotator Pitch = " + FString::SanitizeFloat(ComponentRotator.Pitch) + ", Yaw = " + FString::SanitizeFloat(ComponentRotator.Yaw));
-	MilesTools::DebugOnScreen(RotatorInfo);
+	// MilesTools::DebugOnScreen(RotatorInfo);
 	// ...
+
+	UWorld *MyWorld = GetWorld();
+	MilesTools::DebugOnScreen(FString::SanitizeFloat(MyWorld->TimeSeconds)); // print seconds since game starts
 }
