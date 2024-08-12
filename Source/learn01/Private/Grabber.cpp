@@ -24,6 +24,14 @@ void UGrabber::BeginPlay()
 	// ...
 }
 
+void UGrabber::SubtractLife(uint8 &Life) // no copy, just change the value
+{
+	if (Life > 0)
+	{
+		Life--;
+	}
+}
+
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
@@ -41,4 +49,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Green);
 
 	// MilesTools::DebugOnScreen(DebugEnd.ToCompactString());
+
+	SubtractLife(LifeCount);
+	MilesTools::DebugOnScreen(FString::FromInt(LifeCount));
 }

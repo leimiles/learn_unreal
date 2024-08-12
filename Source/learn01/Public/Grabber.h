@@ -18,10 +18,14 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	void SubtractLife(uint8 &LifeCount);
 
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	UPROPERTY(EditAnywhere)
 	float MaxGrabLength = 200.0f;
+
+	UPROPERTY(EditAnywhere)
+	uint8 LifeCount = 3;
 };

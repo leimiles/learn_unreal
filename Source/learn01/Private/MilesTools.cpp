@@ -18,7 +18,7 @@ MilesTools::~MilesTools()
 {
 }
 
-void MilesTools::DebugOnScreen(const FString &Info, float TimeOfDisplay)
+void MilesTools::DebugOnScreen(const FString &Info, float TimeOfDisplay) // we never change the info, so use const &
 {
     FColor ColorOfDisplay = FColor::MakeRandomColor();
     GEngine->AddOnScreenDebugMessage(-1, TimeOfDisplay, ColorOfDisplay, Info);
