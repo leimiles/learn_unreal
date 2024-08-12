@@ -4,6 +4,7 @@
 #include "Engine/GameEngine.h"
 #include "MilesTools.h"
 #include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -32,6 +33,13 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// MilesTools::DebugOnScreen(RotatorInfo);
 	// ...
 
-	UWorld *MyWorld = GetWorld();
-	MilesTools::DebugOnScreen(FString::SanitizeFloat(MyWorld->TimeSeconds)); // print seconds since game starts
+	// UWorld *MyWorld = GetWorld();
+	// MilesTools::DebugOnScreen(FString::SanitizeFloat(MyWorld->TimeSeconds)); // print seconds since game starts
+
+	FVector DebugStart = GetComponentLocation();
+	DebugStart.Z += MaxGrabHeight;
+	FVector DebugEnd = DebugStart + GetForwardVector() * MaxGrabLength;		// remember to adjust component rotation
+	DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Red);
+
+	//MilesTools::DebugOnScreen(DebugEnd.ToCompactString());
 }
