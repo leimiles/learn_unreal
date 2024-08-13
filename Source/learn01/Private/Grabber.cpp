@@ -104,6 +104,10 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	{
 		ActorGrabbed = HitResult.GetActor();
 	}
+	else
+	{
+		ActorGrabbed = nullptr;
+	}
 
 	if (ShowDebug)
 	{
