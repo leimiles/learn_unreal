@@ -30,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxGrabLength = 200.0f;
 	UPROPERTY(EditAnywhere)
-	float MaxSweepSize = 50.0f;
+	float MaxSweepSize = 20.0f;
 
 	UPROPERTY(EditAnywhere)
 	uint8 LifeCount = 3;

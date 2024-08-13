@@ -126,7 +126,7 @@ void UGrabber::Grab()
 {
 	if (ActorGrabbed != nullptr)
 	{
-		// MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
+		MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
 		UPhysicsHandleComponent *PhysicsHandle = ActorGrabbed->FindComponentByClass<UPhysicsHandleComponent>();
 
 		if (PhysicsHandle != nullptr)
