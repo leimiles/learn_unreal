@@ -32,8 +32,19 @@ void UGrabber::SubtractLife(uint8 &Life) // no copy, just change the value
 	}
 }
 
-void UGrabber::ShowDebugLine()
+void UGrabber::ShowSweepSphereDebug(const FVector &StartPoint, const FVector &EndPoint, const float &SweepSize, const bool &IsHit)
 {
+	DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Green);
+	DrawDebugSphere(GetWorld(), StartPoint, SweepSize, 16, FColor::Green);
+	if (IsHit)
+	{
+		DrawDebugSphere(GetWorld(), EndPoint, SweepSize, 16, FColor::Red);
+	}
+	else
+	{
+		DrawDebugSphere(GetWorld(), EndPoint, SweepSize, 16, FColor::Green);
+	}
+	/*
 	if (ShowDebug)
 	{
 		FVector DebugStart = GetComponentLocation();
@@ -55,6 +66,7 @@ void UGrabber::ShowDebugLine()
 			DrawDebugSphere(GetWorld(), DebugEnd, 50.0f, 32, FColor::Green);
 		}
 	}
+	*/
 }
 
 // Called every frame
@@ -74,10 +86,40 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// SubtractLife(LifeCount);
 	// MilesTools::DebugOnScreen(FString::FromInt(LifeCount));
 
-	ShowDebugLine();
+	// ShowDebugLine();
+
+	FVector SweepStart = GetComponentLocation();
+	FVector SweepEnd = SweepStart + GetForwardVector() * MaxGrabLength;
+	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(MaxSweepSize);
+	FHitResult HitResult;
+	bool IsHit = GetWorld()->SweepSingleByChannel(
+		HitResult,
+		SweepStart,
+		SweepEnd,
+		FQuat::Identity,
+		ECC_GameTraceChannel1,
+		CollisionShape);
+
+	if (IsHit)
+	{
+		ActorGrabbed = HitResult.GetActor();
+	}
+
+	if (ShowDebug)
+	{
+		ShowSweepSphereDebug(SweepStart, SweepEnd, MaxSweepSize, IsHit);
+	}
 }
 
 void UGrabber::Release()
 {
 	MilesTools::DebugOnScreen("yeah");
+}
+
+void UGrabber::Grab()
+{
+	if (ActorGrabbed != nullptr)
+	{
+		MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
+	}
 }

@@ -21,13 +21,16 @@ protected:
 	void SubtractLife(uint8 &LifeCount);
 
 private:
-	void ShowDebugLine();
+	void ShowSweepSphereDebug(const FVector &StartPoint, const FVector &EndPoint, const float &SweepSize, const bool &IsHit = false);
+	AActor *ActorGrabbed = nullptr;
 
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	UPROPERTY(EditAnywhere)
 	float MaxGrabLength = 200.0f;
+	UPROPERTY(EditAnywhere)
+	float MaxSweepSize = 50.0f;
 
 	UPROPERTY(EditAnywhere)
 	uint8 LifeCount = 3;
@@ -37,4 +40,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Release();
+	UFUNCTION(BlueprintCallable)
+	void Grab();
 };
