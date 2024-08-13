@@ -20,6 +20,9 @@ protected:
 	virtual void BeginPlay() override;
 	void SubtractLife(uint8 &LifeCount);
 
+private:
+	void ShowDebugLine();
+
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
@@ -28,4 +31,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	uint8 LifeCount = 3;
+
+	UPROPERTY(EditAnywhere)
+	bool ShowDebug = false;
 };

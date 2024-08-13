@@ -32,11 +32,36 @@ void UGrabber::SubtractLife(uint8 &Life) // no copy, just change the value
 	}
 }
 
+void UGrabber::ShowDebugLine()
+{
+	if (ShowDebug)
+	{
+		FVector DebugStart = GetComponentLocation();
+		FVector DebugEnd = DebugStart + GetForwardVector() * MaxGrabLength; // remember to adjust component rotation
+		DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Green);
+
+		FCollisionShape shape = FCollisionShape::MakeSphere(50.0f);
+		FHitResult HitResult;
+		bool IsHit = GetWorld()->SweepSingleByChannel(HitResult, DebugStart, DebugEnd, FQuat::Identity, ECC_GameTraceChannel1, shape); // emit a shape along the tracing line, see if any actor is being hit, and this hit is not collision hit
+
+		DrawDebugSphere(GetWorld(), DebugStart, 50.0f, 32, FColor::Green);
+
+		if (IsHit)
+		{
+			DrawDebugSphere(GetWorld(), DebugEnd, 50.0f, 32, FColor::Red);
+		}
+		else
+		{
+			DrawDebugSphere(GetWorld(), DebugEnd, 50.0f, 32, FColor::Green);
+		}
+	}
+}
+
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	FString RotatorInfo = GetComponentRotation().ToCompactString();
+	// FString RotatorInfo = GetComponentRotation().ToCompactString();
 	// MilesTools::DebugOnScreen("Rotator Pitch = " + FString::SanitizeFloat(ComponentRotator.Pitch) + ", Yaw = " + FString::SanitizeFloat(ComponentRotator.Yaw));
 	// MilesTools::DebugOnScreen(RotatorInfo);
 	// ...
@@ -44,22 +69,10 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// UWorld *MyWorld = GetWorld();
 	// MilesTools::DebugOnScreen(FString::SanitizeFloat(MyWorld->TimeSeconds)); // print seconds since game starts
 
-	FVector DebugStart = GetComponentLocation();
-	FVector DebugEnd = DebugStart + GetForwardVector() * MaxGrabLength; // remember to adjust component rotation
-	DrawDebugLine(GetWorld(), DebugStart, DebugEnd, FColor::Green);
-
 	// MilesTools::DebugOnScreen(DebugEnd.ToCompactString());
 
 	// SubtractLife(LifeCount);
 	// MilesTools::DebugOnScreen(FString::FromInt(LifeCount));
-	FCollisionShape shape = FCollisionShape::MakeSphere(50.0f);
-	FHitResult HitResult;
-	bool IsHit = GetWorld()->SweepSingleByChannel(HitResult, DebugStart, DebugEnd, FQuat::Identity, ECC_GameTraceChannel1, shape); // emit a shape along the tracing line, see if any actor is being hit, and this hit is not collision hit
 
-	if (IsHit)
-	{
-		MilesTools::DebugOnScreen(HitResult.GetActor()->GetActorNameOrLabel());	// this Actor is the first actor the sphere tracing hits
-		DrawDebugSphere(GetWorld(), DebugStart, 50.0f, 32, FColor::Green);
-		DrawDebugSphere(GetWorld(), DebugEnd, 50.0f, 32, FColor::Green);
-	}
+	ShowDebugLine();
 }
