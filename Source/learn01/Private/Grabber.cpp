@@ -76,3 +76,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	ShowDebugLine();
 }
+
+void UGrabber::Release()
+{
+	MilesTools::DebugOnScreen("yeah");
+}

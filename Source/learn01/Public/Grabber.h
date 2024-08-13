@@ -34,4 +34,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool ShowDebug = false;
+
+	UFUNCTION(BlueprintCallable)
+	void Release();
 };
