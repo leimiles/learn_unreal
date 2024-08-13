@@ -5,6 +5,7 @@
 #include "MilesTools.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -103,6 +104,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	if (IsHit)
 	{
 		ActorGrabbed = HitResult.GetActor();
+		SweepEnd = SweepStart + GetForwardVector() * HitResult.Distance;
 	}
 	else
 	{
@@ -124,6 +126,12 @@ void UGrabber::Grab()
 {
 	if (ActorGrabbed != nullptr)
 	{
-		MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
+		// MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
+		UPhysicsHandleComponent *PhysicsHandle = ActorGrabbed->FindComponentByClass<UPhysicsHandleComponent>();
+
+		if (PhysicsHandle != nullptr)
+		{
+			MilesTools::DebugOnScreen(PhysicsHandle->GetName());
+		}
 	}
 }
