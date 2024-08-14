@@ -33,10 +33,16 @@ void UGrabber::SubtractLife(uint8 &Life) // no copy, just change the value
 	}
 }
 
+void UGrabber::ShowHitDebug()
+{
+	DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.0f, 12, FColor::Yellow, true); // ImpactPoint is the position where collision shape pivot hits
+	DrawDebugSphere(GetWorld(), HitResult.Location, 20.0f, 12, FColor::Blue, true);		 // location is the position where collision shape surface hits
+}
+
 void UGrabber::ShowSweepSphereDebug(const FVector &StartPoint, const FVector &EndPoint, const float &SweepSize, const bool &IsHit)
 {
 	DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Green);
-	DrawDebugSphere(GetWorld(), StartPoint, SweepSize, 16, FColor::Green);
+	// DrawDebugSphere(GetWorld(), StartPoint, SweepSize, 16, FColor::Green);	// start point don't need show, camera start
 	if (IsHit)
 	{
 		DrawDebugSphere(GetWorld(), EndPoint, SweepSize, 16, FColor::Red);
@@ -92,7 +98,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector SweepStart = GetComponentLocation();
 	FVector SweepEnd = SweepStart + GetForwardVector() * MaxGrabLength;
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(MaxSweepSize);
-	FHitResult HitResult;
 	bool IsHit = GetWorld()->SweepSingleByChannel(
 		HitResult,
 		SweepStart,
@@ -105,6 +110,9 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	{
 		ActorGrabbed = HitResult.GetActor();
 		SweepEnd = SweepStart + GetForwardVector() * HitResult.Distance;
+
+		// MilesTools::DebugOnScreen("Location = " + HitResult.Location.ToCompactString());
+		// MilesTools::DebugOnScreen("ImpactPoint = " + HitResult.ImpactPoint.ToCompactString());
 	}
 	else
 	{
@@ -133,5 +141,7 @@ void UGrabber::Grab()
 		{
 			MilesTools::DebugOnScreen(PhysicsHandle->GetName());
 		}
+
+		ShowHitDebug();
 	}
 }

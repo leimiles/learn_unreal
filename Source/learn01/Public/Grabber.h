@@ -21,8 +21,10 @@ protected:
 	void SubtractLife(uint8 &LifeCount);
 
 private:
+	void ShowHitDebug();
 	void ShowSweepSphereDebug(const FVector &StartPoint, const FVector &EndPoint, const float &SweepSize, const bool &IsHit = false);
-	AActor *ActorGrabbed = nullptr;
+	const AActor *ActorGrabbed = nullptr;
+	FHitResult HitResult;
 
 public:
 	// Called every frame
