@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Grabber.generated.h"
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -23,7 +24,10 @@ protected:
 private:
 	void ShowHitDebug();
 	void ShowSweepSphereDebug(const FVector &StartPoint, const FVector &EndPoint, const float &SweepSize, const bool &IsHit = false);
+	void SetCharacter(AActor *Character);
 	const AActor *ActorGrabbed = nullptr;
+	const AActor *Character = nullptr;
+	UPhysicsHandleComponent *PhysicsHandle = nullptr;
 	FHitResult HitResult;
 
 public:
@@ -42,6 +46,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Release();
+
 	UFUNCTION(BlueprintCallable)
 	void Grab();
+	UFUNCTION(BlueprintCallable)
+	void CarryOn();
 };

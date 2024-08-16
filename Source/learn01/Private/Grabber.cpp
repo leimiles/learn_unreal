@@ -5,7 +5,6 @@
 #include "MilesTools.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-#include "PhysicsEngine/PhysicsHandleComponent.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -135,13 +134,28 @@ void UGrabber::Grab()
 	if (ActorGrabbed != nullptr)
 	{
 		MilesTools::DebugOnScreen(ActorGrabbed->GetActorNameOrLabel());
-		UPhysicsHandleComponent *PhysicsHandle = ActorGrabbed->FindComponentByClass<UPhysicsHandleComponent>();
+		PhysicsHandle = ActorGrabbed->FindComponentByClass<UPhysicsHandleComponent>();
 
 		if (PhysicsHandle != nullptr)
 		{
 			MilesTools::DebugOnScreen(PhysicsHandle->GetName());
+			PhysicsHandle->GrabComponentAtLocationWithRotation(
+				HitResult.GetComponent(),
+				NAME_None,
+				HitResult.ImpactPoint,
+				GetComponentRotation());
 		}
 
-		ShowHitDebug();
+		// ShowHitDebug();
 	}
+}
+
+void UGrabber::CarryOn()
+{
+	if (PhysicsHandle == nullptr)
+	{
+		return;
+	}
+
+	// PhysicsHandle->SetTargetLocationAndRotation()
 }
